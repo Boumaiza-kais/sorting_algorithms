@@ -2,22 +2,7 @@
 #include <stdio.h>
 
 /**
- * swap - Swap two values in
- * @i: int type
- * @j: int type
- *
- * Return: Nothing
- */
-
-void swap(int *i, int *j)
-{
-int tmp;
-tmp = *i;
-*i = *j;
-*j = tmp;
-}
-/**
- * part_function - finds the partition
+ * lomuto_partition - finds the partition
  * @array: array to sort
  * @lo: lowest index of the partition to sort
  * @up: highest index of the partition to sort
@@ -25,7 +10,7 @@ tmp = *i;
  * Return: nothing
  */
 
-int part_function(int *array, int lo, int up, size_t size)
+int lomuto_partition(int *array, int lo, int up, size_t size)
 {
 int j;
 int i = lo - 1;
@@ -49,6 +34,23 @@ print_array(array, size);
 return (i + 1);
 }
 
+
+/**
+ * swap - Swap two values in
+ * @i: int type
+ * @j: int type
+ *
+ * Return: Nothing
+ */
+
+void swap(int *i, int *j)
+{
+int tmp;
+tmp = *i;
+*i = *j;
+*j = tmp;
+}
+
 /**
  * qk_sort - sorts a partition of an array
  * @array: array to sort
@@ -63,7 +65,7 @@ void qk_sort(int *array, size_t size, int lo, int up)
 int piv;
 if (lo < up)
 {
-piv = part_function(array, size, lo, up);
+piv = lomuto_partition(array, size, lo, up);
 qk_sort(array, size, lo, piv - 1);
 qk_sort(array, size, piv + 1, up);
 }

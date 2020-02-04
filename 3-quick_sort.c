@@ -9,7 +9,7 @@
  * @size: size of the array
  * Return: nothing
  */
-size_t part_function(int *array, ssize_t lo, ssize_t up, size_t size)
+int part_function(int *array, ssize_t lo, ssize_t up, size_t size)
 {
 	int j;
 	int i = lo - 1;

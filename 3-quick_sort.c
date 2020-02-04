@@ -2,32 +2,6 @@
 #include <stdio.h>
 
 /**
- * part_function - finds the partition
- * @array: array to sort
- * @lo: lowest index of the partition to sort
- * @up: highest index of the partition to sort
- * @size: size of the array
- * Return: nothing
- */
-int part_function(int *array, ssize_t lo, ssize_t up, size_t size)
-{
-	int j;
-	int i = lo - 1;
-	int pivot = array[up];
-
-	for (j = lo ; j <= up - 1; j++)
-	{
-		if (array[j] <= pivot)
-		{
-			i++;
-			swap(array, size, &array[i], &array[j]);
-		}
-	}
-	swap(array, size, &array[i + 1], &array[up]);
-	return (i + 1);
-}
-
-/**
  * swap - Swap two values in
  * @array: Array
  * @size: Size of array
@@ -37,17 +11,46 @@ int part_function(int *array, ssize_t lo, ssize_t up, size_t size)
  * Return: Nothing
  */
 
-void swap(int *array, size_t size, int *i, int *j)
+void swap(int *i, int *j)
 {
 	int tmp;
 
-		if (*i != *j)
-		{
 		tmp = *i;
 		*i = *j;
 		*j = tmp;
-		print_array(array, size);
+}
+/**
+ * part_function - finds the partition
+ * @array: array to sort
+ * @lo: lowest index of the partition to sort
+ * @up: highest index of the partition to sort
+ * @size: size of the array
+ * Return: nothing
+ */
+
+int part_function(int *array, int lo, int up, size_t size)
+{
+	int j;
+	int i = lo - 1;
+
+	for (j = lo ; j <= up - 1; j++)
+	{
+		if (array[j] < array[up])
+		{
+			i++;
+                        if (i != j)
+			  {
+		        	swap( &array[i], &array[j]);
+				print_array(array, size);
+			  }
 		}
+	}
+	if (array[up] < array[i + 1])
+        {
+	swap(&array[i + 1], &array[up]);
+        print_array(array, size);
+        }
+	return (i + 1);
 }
 
 /**
@@ -58,18 +61,16 @@ void swap(int *array, size_t size, int *i, int *j)
  * @size: size of the array
  * Return: nothing
  */
+
 void qk_sort(int *array, size_t size, int lo, int up)
 {
-	int partition;
-
-	if (!array || !size)
-	return;
+	int piv;
 
 	if (lo < up)
 	{
-		partition = part_function(array, size, lo, up);
-		qk_sort(array, size, lo, partition - 1);
-		qk_sort(array, size, partition + 1, up);
+		piv = part_function(array, size, lo, up);
+		qk_sort(array, size, lo, piv - 1);
+		qk_sort(array, size, piv + 1, up);
 	}
 }
 
@@ -79,9 +80,10 @@ void qk_sort(int *array, size_t size, int lo, int up)
  * @size: The size of the array
  * Return: nothing
  */
+
 void quick_sort(int *array, size_t size)
 {
-	if (array == NULL || size < 2)
+	if (size < 2)
 		return;
 	qk_sort(array, 0, size - 1, size);
 }

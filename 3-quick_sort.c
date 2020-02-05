@@ -1,5 +1,21 @@
 #include "sort.h"
-#include <stdio.h>
+
+/**
+ * swap - Swap two values in
+ * @i: int type
+ * @j: int type
+ *
+ * Return: Nothing
+ */
+
+void swap(int *i, int *j)
+{
+int tmp;
+tmp = *i;
+*i = *j;
+*j = tmp;
+}
+
 
 /**
  * lomuto_partition - finds the partition
@@ -19,36 +35,21 @@ for (j = lo ; j <= up - 1; j++)
 if (array[j] < array[up])
 {
 i++;
+swap(&array[i], &array[j]);
 if (i != j)
 {
-swap(&array[i], &array[j]);
 print_array(array, size);
 }
 }
 }
+i++;
 if (array[up] < array[i + 1])
 {
 swap(&array[i + 1], &array[up]);
+if (i != up)
 print_array(array, size);
 }
 return (i + 1);
-}
-
-
-/**
- * swap - Swap two values in
- * @i: int type
- * @j: int type
- *
- * Return: Nothing
- */
-
-void swap(int *i, int *j)
-{
-int tmp;
-tmp = *i;
-*i = *j;
-*j = tmp;
 }
 
 /**

@@ -1,45 +1,23 @@
 #include "sort.h"
 
 /**
- * partition_function - finds the partition
- * @array: array to sort
- * @lo: lowest index of the partition to sort
- * @up: highest index of the partition to sort
- * @size: size of the array
- * Return: nothing
+ * swap - Swap two values in
+ * @i: int type
+ * @j: int type
+ *
+ * Return: Nothing
  */
-int partition_function(int *array, int lo, int up, size_t size)
+
+void swap(int *i, int *j)
 {
-	int i = lo - 1;
-	int pivot, j;
-
-	for (j = lo; j <= up - 1; j++)
-	{
-		if (array[j] < array[up])
-		{
-			i++;
-			if (i < j)
-			{
-				pivot = array[i];
-				array[i] = array[j];
-				array[j] = pivot;
-				print_array(array, size);
-			}
-		}
-	}
-	if (array[i + 1] > array[up])
-	{
-		pivot = array[i + 1];
-		array[i + 1] = array[up];
-		array[up] = pivot;
-		print_array(array, size);
-	}
-
-	return (i + 1);
+int tmp;
+tmp = *i;
+*i = *j;
+*j = tmp;
 }
 
 /**
- * call_fun - sorts a partition of an array
+ * lomuto_partition - finds the partition
  * @array: array to sort
  * @lo: lowest index of the partition to sort
  * @up: highest index of the partition to sort
@@ -47,15 +25,48 @@ int partition_function(int *array, int lo, int up, size_t size)
  * Return: nothing
  */
 
-void call_fun(int *array, int lo, int up, size_t size)
+int lomuto_partition(int *array, int lo, int up, size_t size)
+{
+int j;
+int i = lo - 1;
+for (j = lo ; j <= up - 1; j++)
+{
+if (array[j] < array[up])
+{
+i++;
+if (i < j)
+{
+swap(&array[i], &array[j]);
+print_array(array, size);
+}
+}
+}
+if (array[up] < array[i + 1])
+{
+swap(&array[i + 1], &array[up]);
+print_array(array, size);
+}
+return (i + 1);
+}
+
+
+/**
+ * qk_sort - sorts a partition of an array
+ * @array: array to sort
+ * @lo: lowest index of the partition to sort
+ * @up: highest index of the partition to sort
+ * @size: size of the array
+ * Return: nothing
+ */
+
+void qk_sort(int *array, int lo, int up, size_t size)
 {
 int piv;
-
 if (lo < up)
 {
-piv = partition_function(array, lo, up, size);
-call_fun(array, lo, piv - 1, size);
-call_fun(array, piv + 1, up, size);
+piv = lomuto_partition(array, lo, up, size);
+qk_sort(array, lo, piv - 1, size);
+qk_sort(array, piv + 1, up, size);
 }
 }
 
@@ -68,5 +79,5 @@ call_fun(array, piv + 1, up, size);
 
 void quick_sort(int *array, size_t size)
 {
-	call_fun(array, 0, size - 1, size);
+qk_sort(array, 0, size - 1, size);
 }

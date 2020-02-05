@@ -53,7 +53,7 @@ return (i + 1);
 }
 
 /**
- * qk_sort - sorts a partition of an array
+ * call_sort - sorts a partition of an array
  * @array: array to sort
  * @lo: lowest index of the partition to sort
  * @up: highest index of the partition to sort
@@ -61,14 +61,14 @@ return (i + 1);
  * Return: nothing
  */
 
-void qk_sort(int *array, size_t size, int lo, int up)
+void call_sort(int *array, size_t size, int lo, int up)
 {
 int piv;
 if (lo < up)
 {
 piv = lomuto_partition(array, size, lo, up);
-qk_sort(array, size, lo, piv - 1);
-qk_sort(array, size, piv + 1, up);
+call_sort(array, size, lo, piv - 1);
+call_sort(array, size, piv + 1, up);
 }
 }
 
@@ -83,5 +83,5 @@ void quick_sort(int *array, size_t size)
 {
 if (size < 2)
 return;
-qk_sort(array, 0, size - 1, size);
+call_sort(array, 0, size - 1, size);
 }
